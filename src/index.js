@@ -1,31 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ReactDOM from 'react-dom/client';
-import { useState, useEffect } from 'react';
-import './index.css';
-import { FaStar } from 'react-icons/fa';
+import './index.css';;
 
 
 function App() {
-  const [data, setData] = useState([]);
+  const [sound, setSound] = useState("");
+  const [color, setColor] = useState("#000000");
 
-  useEffect(() => {
-    fetch('https://api.github.com/users')
-      .then((response) => response.json())
-      .then(setData);
-  });
-
-  if (data){
-    return (
-      <ul>
-        {data.map((user) => (
-          <li key={user.id}>{user.login}</li>
-        ))}
-      </ul>
-    );
-  }
+  const submit = (e) => {
+    e.preventDefault();
+    alert(`${sound} sounds like ${color}`);
+    setSound("");
+    setColor("#000000");
+  };
 
   return (
-    <p>No users</p>
+    <form onSubmit={submit}>
+      <input value={sound} type="text" placeholder="sound..." onChange={(e) => setSound(e.target.value)} />
+      <input value={color} type="color" onChange={(e) => setColor(e.target.value)} />
+      <button>ADD</button>
+    </form>
   );
 }
 
